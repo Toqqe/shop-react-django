@@ -1,0 +1,308 @@
+body{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+}
+#root{
+  display: flex;
+  flex-flow: column nowrap;
+  min-height: 100vh;
+}
+
+/**/
+
+.nav-links{
+  margin-right: -40px !important;
+}
+
+/**/
+.carousel-item > img{
+  height: 480px;
+  object-fit: cover;
+}
+/**/
+.info-container, .sale-container{
+  margin-top: 7rem;
+}
+/**/
+
+.daily-deals-container{
+
+  margin-top: 8rem;
+  margin-bottom: 5rem;
+
+}
+
+.daily-deals-container h2:before , .daily-deals-container h2:after{
+  background-color: #000;
+  content: "";
+  height: 2px;
+  width: 100px;
+  display: inline-block;
+  margin: 0 1rem;
+  vertical-align:middle;
+}
+
+@media screen and (max-width: 414px){
+  .daily-deals-container h2:before , .daily-deals-container h2:after{
+    width: 50px;
+  }
+}
+
+/**/
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(100%);
+}
+
+.carousel-caption{
+  color: black !important;
+}
+
+
+/**/
+
+.card{
+  border: none !important;
+}
+
+.card img:hover{
+  box-shadow: 0px 5px 10px rgb(82, 82, 82);
+  transform: scale(1.05);
+}
+
+@media screen {
+  
+}
+
+/**/
+
+.more-products a{
+  color:#000;
+}
+.more-products a:hover{
+  color:blueviolet;
+}
+
+a, img, button{
+  transition: all 0.3s ease 0s;
+}
+
+/**/
+svg:hover{
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  
+  30%, 50%, 70% {
+    transform: translate3d(-2px, 0, 0);
+  }
+  40%, 60% {
+    transform: translate3d(2px, 0, 0);
+  }
+}
+
+/**/
+.sub-email{
+  border: 0;
+  border-bottom: 1px solid gray;
+}
+.sub-email{
+  background-color: transparent;
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+
+input:focus{
+  outline: none;
+}
+
+.subscribe-container button{
+  font-size: 1.1rem;
+  padding: 1rem 3rem 1rem 3rem;
+  background-color: #000000;
+  border: #000;
+}
+
+.subscribe-container button:hover{
+  background-color: red;
+}
+
+/**/
+.sale-container{
+  text-align: center;
+}
+
+/**/
+
+/* .footer-container{
+
+} */
+
+
+/**/
+
+.about::before{
+  z-index: -9999;
+  content: "";
+  background-color: #F8F9FA;
+  position: absolute;
+  width: 75%;
+  left: 12.5%; /* Pozycjonowanie centralne */
+  top: 80px;
+  height: 450px;
+}
+
+
+
+.about-container h1{
+  margin-top: 0rem !important;
+}
+.about-container{
+  margin-bottom: 5rem !important;
+}
+
+.about-container p{
+  margin: 50px auto 0 auto;
+  width: 50%;
+}
+
+/**/
+
+.submit-form-button{
+  background-color: #000 !important;
+  border: none !important;
+  padding: 1rem 3rem!important;
+}
+.submit-form-button:hover{
+  background-color: red !important;
+}
+
+/**/
+.list-group{
+  border: none !important; 
+}
+
+.list-group-item {
+  color: black !important;
+  background-color: transparent !important;
+  cursor: pointer;
+  border: 0 !important;
+  border-bottom: solid 1px rgb(187, 187, 187) !important;
+}
+.list-group-item:last-child {
+
+  border: 0 !important;
+}
+.list-group-item.active{
+  background-color: rgb(229, 241, 252) !important;
+  margin: 0 !important;
+}
+
+/**/
+.products-button{
+  width: 4rem;
+}
+
+
+.product-actions {
+  position: absolute;
+  bottom: 120px; /* Adjust this value as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease; /
+}
+
+.card-container:hover .product-actions{
+  opacity: 1;
+  transform: translate(-50%, -100%);
+  
+}
+.card-container img{
+  cursor: pointer;
+}
+
+
+/* Dropdown */
+#dropdown-user:after{
+  display:none !important;
+}
+#dropdown-user{
+  border: none;
+  padding: 0 !important;
+  transition: all .5s ease;
+}
+
+
+/**/
+
+
+.login-container, .register-container{
+ text-align: center;
+}
+
+
+.login-form, .register-form{
+  margin: 0 auto;
+  margin-top: 1rem;
+  box-shadow: 0 0 6px rgba(0,0,0,.1);
+  text-align: left;
+}
+
+.login-form input, .register-form input{
+  margin-bottom:1rem;
+}
+.bi-eye{
+  cursor: pointer;
+  margin-left: -2rem;
+  margin-bottom: 1rem;
+}
+
+.login-form input::-webkit-input-placeholder, .register-form input::-webkit-input-placeholder{
+  opacity: 0.7 !important;
+}
+
+.login-form-button, .register-form-button{
+  color: rgb(88, 88, 88) !important;
+  background-color: #e0e0e0 !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  padding: 0.5rem 2.5rem !important;
+}
+
+.form-control:focus {
+  border-color: #cccccc !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(216, 216, 216, 0.6) !important; 
+}
+
+.login-form-button:hover, .register-form-button:hover{
+  background-color: rgb(0, 0, 0) !important;
+
+  -webkit-transition: background-color 5s linear;
+  -ms-transition: background-color 5s linear;
+
+  transition: all 0.5s ease !important;
+  color: white !important;
+
+}
+
+/**/
+
+.product-details-desc p{
+  width: 70%;
+}
+
+.product-details-price span{
+  font-size: 22px;
+}
+
+
+/**/
+
