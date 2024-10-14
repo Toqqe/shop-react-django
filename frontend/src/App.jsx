@@ -11,31 +11,68 @@ import DetailProduct from './pages/DetailProduct.jsx';
 import Login from "./pages/Login.jsx"
 import Register from './pages/Register.jsx';
 import Logout from './pages/Logout.jsx';
+import Profile from './pages/Profile.jsx';
+import Checkout from './pages/Checkout.jsx';
+import Orders from "./pages/Orders.jsx"
 
 import { CartProvider } from './cart-components/CartContext.jsx';
 import CartCanvas from './cart-components/CartCanvas.jsx';
 
 import {AuthProvider} from "./axiosinstance/Auth.jsx"
 
+import LoginToast from "./elements/LoginToast.jsx"
+
+import {useState, useEffect} from 'react';
+
+import SplashScreen from './pages/SplashScreen.jsx';
+
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect( () => {
+
+      const hasSeenSplashScreen = sessionStorage.getItem('hasSeenSplashScreen');
+      
+      if(!hasSeenSplashScreen){
+        const timer = setTimeout( () => {
+            setLoading(false);
+            sessionStorage.setItem('hasSeenSplashScreen', 'true');
+        }, 2000)
+        return () => {
+          clearTimeout(timer);
+        };
+      }else{
+        setLoading(false);
+      }
+
+  }, [])
+
+  if(loading){
+      return (<SplashScreen/>)
+  }
+
 
   return (
     <Router>
-
       <AuthProvider>
         <CartProvider>
           <NavBar/>
           <Routes>
-            <Route exact path="/" element={<Home/>}/>
-            <Route exact path="/shop" element={<Shop/>}/>
-            <Route exact path="/about" element={<About/>}/>
-            <Route exact path="/contact" element={<Contact/>}/>
-            <Route exact path="/products/:id" element={<DetailProduct/>}/>
-            <Route exact path="/login" element={<Login/>}/>
-            <Route exact path="/register" element={<Register/>}/>
-            <Route exact path="/logout" element={<Logout/>}/>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/shop" element={<Shop/>}/>
+            <Route path="/about" element={<About/>}/>
+            <Route path="/contact" element={<Contact/>}/>
+            <Route path="/products/:id" element={<DetailProduct/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/register" element={<Register/>}/>
+            <Route path="/logout" element={<Logout/>}/>
+            <Route path="/profile" element={<Profile/>}/>
+            <Route path="/profile/orders" element={<Orders/>}/>
+            <Route path="/checkout" element={<Checkout/>}/>
             {/* <Route path="*" element={<NotFound />} /> */}
           </Routes>
+
+          <LoginToast/>
           <CartCanvas/>
         </CartProvider>
       </AuthProvider>

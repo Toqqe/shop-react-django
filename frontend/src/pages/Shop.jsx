@@ -18,7 +18,7 @@ import ChangeTitle from "./Title.jsx";
 
 function Shop(){
 
-
+    let filteredCategory = null;
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([{ id:0, name:'All'}]);
     const [selectedOrder, setSelectedOrder] = useState('id');
@@ -58,12 +58,21 @@ function Shop(){
     }, [selectedCategory]);
 
     function handleCategoryClick(categoryId){
-        setCurrCategory(categoryId);
-        navigate(`/shop?category=${categoryId}`);
+        if(categoryId === 0){
+            navigate(`/shop`);
+        }else{
+            setCurrCategory(categoryId);
+            navigate(`/shop?category=${categoryId}`);
+        }
     };
 
     async function handleOrder(typeOrder){
-        const filteredCategory = await axiosInstance.get(`products/?category__id=${currCategory}&ordering=${typeOrder}`);
+        if(typeOrder == "0"){
+            filteredCategory = await axiosInstance.get(`products/&ordering=${typeOrder}`);
+        }else{
+            filteredCategory = await axiosInstance.get(`products/?category__id=${currCategory}&ordering=${typeOrder}`);
+        }
+        
         //navigate(`/shop?category=${currCategory}&ordering=${typeOrder}`);
         setProducts(filteredCategory.data.results);
         setSelectedOrder(typeOrder);

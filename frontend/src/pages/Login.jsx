@@ -22,6 +22,9 @@ function Login(){
         <Container className="login-container mb-5">
             <ChangeTitle title="Login"/>
             <h2 className="mt-5">Login</h2>
+            <div className="wrong-creditials text-center">
+                <h3>Wrong creditials!</h3>
+            </div>
             <Row className="mt-4">
                 <Col lg={7} md={12} className="ms-auto me-auto">
                     <div className="login-wrapper">

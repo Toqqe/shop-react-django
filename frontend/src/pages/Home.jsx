@@ -7,6 +7,7 @@ import Sale from "../home-components/Sale";
 
 import ChangeTitle from "./Title.jsx";
 
+
 function Home(){
     return( 
             <Container className="p-0" fluid>

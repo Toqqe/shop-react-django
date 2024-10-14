@@ -1,40 +1,56 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { json, useNavigate } from "react-router-dom";
 import { jwtDecode } from 'jwt-decode';
 import axios from "axios";
+import GLOBAL_URLS from "./GlobalUrls";
 
-const API_URL = 'http://localhost:8000/api/';
+const API_URL = GLOBAL_URLS.API.BASE_URL;
 
 const AuthContext = createContext();
 export default AuthContext;
 
 export const AuthProvider = ({children}) => {
-
     let [user, setUser] = useState( () => localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null)
     let [authTokens, setAuthTokens] = useState(() => (localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null))
-
+    console.log(user)
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     let loginUser = async (e) =>{
         e.preventDefault();
 
-        const response = await axios.post(`${API_URL}token/`, {
+        await axios.post(`${API_URL}token/`, {
             username: e.target.username.value,
             password: e.target.password.value,
-        });
+        })
+        .then( res => {
+            const data = res.data;
+            if(data){ 
+                console.log("data", data)
+                localStorage.setItem('authTokens', JSON.stringify(data));
+                setAuthTokens(data);
+                setUser(jwtDecode(data.access));
+                navigate(GLOBAL_URLS.HOME);
+            }else{
+                alert("!! WRONG !!")
+            }
 
-        const data = response.data;
+        }).catch(
+            error => {
+                const dataError = error.response;
+                if(dataError.status === 401){
+                    const formControls = document.querySelectorAll('.form-control')
+                    const infoBox = document.querySelector('.wrong-creditials')
+
+                    formControls.forEach( form => {
+                        infoBox.style.display = 'block';
+                        form.style.borderColor = 'red';
+                    })
+                }
+            }
+        );
+
         
-        if(data){ // add messages
-            console.log(data)
-            localStorage.setItem('authTokens', JSON.stringify(data));
-            setAuthTokens(data);
-            setUser(jwtDecode(data.access));
-            navigate('/');
-        }else{
-            alert("!! WRONG !!")
-        }
     }
 
     const loginAfterRegistry = async (username, password) => {
@@ -51,7 +67,7 @@ export const AuthProvider = ({children}) => {
                 localStorage.setItem('authTokens', data);
                 setAuthTokens(data); //JSON.stringify(data)
                 setUser(jwtDecode(data.access));
-                navigate('/');
+                navigate(GLOBAL_URLS.HOME);
             }
         }catch(error){
             console.error("Something went wrong: ", error)
@@ -61,26 +77,35 @@ export const AuthProvider = ({children}) => {
     let logoutUser = (e) => {
         setUser(null)
         localStorage.removeItem('authTokens')
-        navigate('/')
+        navigate(GLOBAL_URLS.HOME)
     }
 
+
     const updateToken = async () => {
-        console.log(authTokens?.refresh)
-        const response = await axios.post(`${API_URL}token/refresh/`, {
-            refresh:authTokens?.refresh
-        })
-        if(response.status === 200){
-            setAuthTokens(response.data)
-            setUser(jwtDecode(response.data.access))
-            localStorage.setItem('authTokens',  JSON.stringify(response.data)) //JSON.stringify(response.data))
-        }else{
-            logoutUser()
+        console.log("updateToken: ", authTokens)
+
+        try{
+            const response = await axios.post(`${API_URL}token/refresh/`, {
+                refresh:authTokens?.refresh
+            })
+            if(response.status === 200){
+
+                setAuthTokens(response.data)
+                setUser(jwtDecode(response.data.access))
+                localStorage.setItem('authTokens', JSON.stringify(response.data)) //JSON.stringify(response.data))
+            }else{
+                logoutUser();
+            }
+        } catch(error){
+            console.error('Error while refreshing token: ', error);
+            logoutUser();
         }
+
         if(loading){
             setLoading(false)
         }
     }
-
+    
     let contextData = {
         user: user,
         authTokens: authTokens,
@@ -89,14 +114,24 @@ export const AuthProvider = ({children}) => {
         loginAfterRegistry : loginAfterRegistry,
     }
 
-    useEffect( () => {
-        const REFRESH_INTERVAL = 1000*60*0.1 // 4 min
-        setInterval( () => {
+    useEffect(()=>{
+        const REFRESH_INTERVAL = 1000 * 60 * 4 // 4 minutes
+        let interval = setInterval(()=>{
             if(authTokens){
                 updateToken();
             }
-        }, REFRESH_INTERVAL);
-    }, [authTokens])
+        }, REFRESH_INTERVAL)
+        return () => clearInterval(interval)
+
+    },[authTokens])
+
+    useEffect( () => {
+        if(user){
+            if(new Date().getTime() /1000 >= user.exp){
+                logoutUser();
+            }
+        }
+    }, [user])
 
     return(
         <AuthContext.Provider value={contextData}>

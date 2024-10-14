@@ -1,5 +1,8 @@
 
-import {useState, useContext, createContext, useReducer} from 'react';
+import {useState, useContext, createContext, useReducer, useEffect} from 'react';
+import AuthContext from '../axiosinstance/Auth';
+import axiosInstanceBase from '../axiosinstance/AxiosInstanceBase';
+import { useLocation } from "react-router-dom";
 
 const CartContext = createContext();
 
@@ -7,14 +10,35 @@ const CartContext = createContext();
 const cartReducer = (state, action) => {
     switch(action.type){
         case 'ADD':
-            return{
-                 ...state,
-                 items:[...state.items, action.payload]
-            };
-        case 'REMOVE':
+            const addItems = [...state.items, action.payload]
+            const addItemsTotal = addItems.reduce((sum, item) => sum+(item.quantity * item.product.price), 0);
             return{
                 ...state,
-                items: state.items.filter(item => item.id !== action.payload.id)
+                items:addItems,
+                total: addItemsTotal
+            };
+        case 'UPDATE':
+            if(action.payload.quantity > 10){
+                action.payload.quantity = 10
+            }
+            const updatedItems = state.items.map(
+                item => item.id === action.payload.id ? { ...item, quantity: action.payload.quantity } : item
+            )
+            const updatedTotal = updatedItems.reduce((sum, item) => sum + (item.quantity * item.product.price),0);
+           return{
+                ...state,
+                items: updatedItems,
+                total: updatedTotal.toFixed(2)
+            };
+        case 'REMOVE':
+            const removedItems = state.items.filter(
+                item => item.id !== action.payload.id
+            )
+            const removedTotal = removedItems.reduce((sum, item) => sum + (item.quantity * item.product.price), 0)
+            return{
+                ...state,
+                items: removedItems,
+                total: removedTotal.toFixed(2)
             };
         case 'CLEAR':
             return{
@@ -22,8 +46,12 @@ const cartReducer = (state, action) => {
                 items:[]
             };
         case 'INIT':
+            const newItems = action.payload;
+            const newTotal = newItems.reduce(
+                (sum, item) => sum + (item.quantity * item.product.price), 0);
+
             return{
-                ...state, items: action.payload
+                ...state, items: newItems, total: newTotal.toFixed(2)
             };
         default:
             return state;
@@ -32,13 +60,39 @@ const cartReducer = (state, action) => {
 
 
 export const CartProvider = ({children}) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [state, dispatch] = useReducer(cartReducer, {items:[]})
 
+    const location = useLocation();
+
+    const {user,authTokens} = useContext(AuthContext);
+    const [isOpen, setIsOpen] = useState(false);
+    const [state, dispatch] = useReducer(cartReducer, {items:[], total:0})
 
     const handleView = () => {
         setIsOpen(prevState => !prevState);
     }
+
+    useEffect( () => {
+        setIsOpen(false);
+    }, [location])
+
+    const initCart = () => {        
+        if(authTokens){
+            const headers = {
+                Authorization:  `Bearer ${authTokens?.access}`,
+                'User-ID' : user.user_id,
+            }
+            axiosInstanceBase.get('cart/cart/',{
+                headers: headers,
+            })
+            .then( response => {
+                dispatch({type: 'INIT', payload: response.data[0].items});
+            });
+        }
+    }
+
+    useEffect( () => { 
+        initCart();
+    }, [dispatch, authTokens])
 
     return(
         <CartContext.Provider value={{isOpen, handleView, state, dispatch}}>

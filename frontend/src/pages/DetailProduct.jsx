@@ -14,11 +14,13 @@ import { register } from 'swiper/element/bundle';
 register();
 
 import ProductSwipper from "../elements/ProductSwipper"
+import ProductOperations from "../utility/ProductOperations";
 
 function DetailProduct(){
     const {id} = useParams();
     const [product, setProduct] = useState(null);
     const [quantityProduct, setQuantityProduct] = useState(1);
+    const {handleAddItem, handleRemoveItem, handleClearCart } = ProductOperations();
 
     useEffect( () => {
         const fetchProductData = async () =>{
@@ -57,7 +59,7 @@ function DetailProduct(){
                             </div>
                             <div className="product-details-buttons my-3 d-flex">
                                 <Form.Control className="mx-2" type="number" as="input" size="sm" min={0} max={10} value={quantityProduct} onChange={(e) => handleQuantityChange(e)} style={{width:"10%"}}/>
-                                <Button variant="dark" disabled={ product.avaliable?false:true }>
+                                <Button variant="dark" disabled={ product.avaliable?false:true } onClick={() => handleAddItem({productID : product.id, quantity: quantityProduct})}>
                                     {product.avaliable?"Add to cart":"Out of stock"}
                                 </Button>
                             </div>
@@ -67,6 +69,7 @@ function DetailProduct(){
                     )}
                 </Col>
             </Row>
+            <hr/>
         </Container>
     )
 }

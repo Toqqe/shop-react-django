@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react';
+import {useState, useContext, useEffect} from 'react';
 import {Link } from 'react-router-dom';
 
 import AuthContext from '../axiosinstance/Auth.jsx';
@@ -16,9 +16,11 @@ import Collapse from 'react-bootstrap/Collapse';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+
 function NavBar(){
-    const { handleView } = useCart();
+    const { handleView, state } = useCart();
     const contextData = useContext(AuthContext);
+
 
     const [activeKey, setActiveKey] = useState(1);
 
@@ -34,7 +36,7 @@ function NavBar(){
                                     <Navbar.Brand className="d-none d-lg-block" as={Link} to="/">SzS</Navbar.Brand>
                                 </Col>
                                 <Col lg={8} className='d-flex justify-content-center'>
-                                        <Nav activeKey={activeKey} onSelect={selectedKey=> setActiveKey(selectedKey)}>
+                                        <Nav activeKey={activeKey} onSelect={selectedKey=> `setActiveKey`(selectedKey)}>
                                             <Nav.Item >
                                                 <Nav.Link eventKey={1} as={Link} to="/">Home</Nav.Link>
                                             </Nav.Item>
@@ -56,24 +58,21 @@ function NavBar(){
                                                 </Dropdown.Toggle>
                                                 <Collapse dimension="height">
                                                 <Dropdown.Menu rootCloseEvent='click'>
-                                                    <Dropdown.Item>1</Dropdown.Item>
-                                                    <Dropdown.Item>2</Dropdown.Item>
-                                                    <Dropdown.Item>3</Dropdown.Item>
-                                                    <Dropdown.Divider/>
                                                         {contextData.user ? (
-                                                            <>
+                                                            <div className='text-center'>
+                                                                <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
+                                                            <Dropdown.Divider/>
                                                                 <Dropdown.Item className="m-0 p-1" as={Link} to="/profile">
                                                                     <p className='text-center m-0'>{contextData.user.username }</p> 
                                                                 </Dropdown.Item>
                                                                 <Dropdown.Item className="m-0 p-1" as={Link} to="/logout" onClick={contextData.logoutUser}>
                                                                     <p className='text-center m-0'>Logout</p> 
                                                                 </Dropdown.Item>
-                                                            </>
+                                                            </div>
                                                         
                                                         ) : (
                                                             <div className='text-center'>
                                                                 <Dropdown.Item as={Link} to="/login">
-                                                                
                                                                         <p className='p-0 m-1'>Login</p> 
                                                                 </Dropdown.Item>
 
@@ -85,8 +84,19 @@ function NavBar(){
                                                 </Dropdown.Menu>
                                                 </Collapse>
                                             </Dropdown>
-                                            <Navbar.Text>
+                                            <Navbar.Text className='position-relative'>
+                                            {contextData.user ? (
+                                            <>
                                                 <Basket style={{fontSize:"20px"}} onClick={handleView}></Basket>
+                                                <Badge style={{marginLeft:"5px", marginTop:"10px"}} bg='danger' className='position-absolute top-50 start-100 rounded-pill translate-middle'>{state.items?.length ?? "0" }</Badge>
+                                            </>
+                                            ) : (
+                                            <>
+                                                <p className='mx-2 my-auto text-muted'>
+                                                    <Link to="/login" className='text-decoration-none'>Login in</Link>
+                                                </p>
+                                            </>
+                                            )}
                                             </Navbar.Text>                 
                                 </Col>
                             </Row>
