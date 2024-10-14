@@ -25,10 +25,8 @@ class ContactMessageView(APIView):
     permission_classes = []
     def post(self, request, *args, **kwargs):
         serializer = ContactMessageSerializer(data=request.data)
-        print(serializer)
         if serializer.is_valid():
             serializer.save()
-            print(serializer)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

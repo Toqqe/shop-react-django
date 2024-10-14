@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'cart',
     'account',
     'products',
+    'orders',
 ]
 
 
@@ -143,6 +144,12 @@ MEDIA_URL = "media/"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+CORS_ALLOW_HEADERS = [
+    'authorization',
+    'content-type',
+    'user-id',
+]
+
 CORS_ALLOWED_ORIGINS = [
      'http://localhost:5173'
 ]
@@ -161,7 +168,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
      'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
      'ROTATE_REFRESH_TOKENS': True,
      'BLACKLIST_AFTER_ROTATION': True,

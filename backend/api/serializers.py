@@ -16,6 +16,7 @@ class CustomTokenRefreshSerializer(TokenRefreshSerializer):
         token = super().get_token(user)
         token['username'] = user.username
         return token
+    
 class ContactMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactMessage
