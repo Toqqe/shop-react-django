@@ -5,11 +5,17 @@ User = get_user_model()
 
 # Create your models here.
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=100, null=True)
-    last_name = models.CharField(max_length=100, null=True)
-    ## Add address
-    def __str__(self):
-        return self.user.username
+# class Profile(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     first_name = models.CharField(max_length=100, null=True)
+#     last_name = models.CharField(max_length=100, null=True)
     
+#     def __str__(self):
+#         return self.user.username
+    
+class Addressess(models.Model):
+    profile = models.ForeignKey(User, on_delete=models.CASCADE)
+    street = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=10)
+    country = models.CharField(max_length=50)

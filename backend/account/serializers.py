@@ -2,20 +2,26 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import Profile
+from .models import Addressess
 
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-
+    first_name = serializers.CharField(max_length=20, required=True)
+    last_name = serializers.CharField(max_length=20, required=True)
+    
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'password']
     
     def validate_username(self, value):
         if User.objects.filter(username=value).exists():
             raise serializers.ValidationError("This username is taken!")
+        return value
+    def validate_password(self, value):
+        if len(value) < 8:
+            raise serializers.ValidationError("Password must be at least 8 chars")
         return value
     
     def create(self, validated_data):
@@ -23,8 +29,13 @@ class UserSerializer(serializers.ModelSerializer):
         return super(UserSerializer, self).create(validated_data)
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False, read_only=True)
+# class ProfileSerializer(serializers.ModelSerializer):
+#     user = UserSerializer(many=False, read_only=True)
+#     class Meta:
+#         model = Profile
+#         fields = ['user', 'first_name', 'last_name', 'email']
+        
+class AddressSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Profile
-        fields = ['user', 'first_name', 'last_name', 'email']
+        model=Addressess
+        fields = '__all__'

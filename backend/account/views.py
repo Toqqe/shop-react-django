@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import UserSerializer
+from .serializers import UserSerializer, AddressSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.viewsets import ModelViewSet
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken 
@@ -15,9 +16,13 @@ class UserCreateView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = (AllowAny, ) # HasAPIKey
 
-# class UserView(generics.RetrieveAPIView):
-#     serializer_class = UserSerializer
-#     permission_classes = () #HasAPIKey
+    
+class AddressView(ModelViewSet):
+    serializer_class = AddressSerializer
+    permission_classes = () 
+
+    def get_queryset(self):
+        user_id = self.request.headers.get('user-id')
 
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated, )

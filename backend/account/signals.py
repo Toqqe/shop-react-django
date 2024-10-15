@@ -3,7 +3,12 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile
 
-@receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+# @receiver(post_save, sender=User)
+# def create_profile(sender, instance, created, **kwargs):
+#     if created:
+#         new_profile = Profile.objects.create(user=instance)
+#         new_profile.first_name = instance.first_name
+#         new_profile.last_name = instance.last_name
+#         new_profile.save()
+        
+        
