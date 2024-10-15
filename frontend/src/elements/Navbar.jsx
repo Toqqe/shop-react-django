@@ -53,7 +53,7 @@ function NavBar(){
                                 </Col>
                                 <Col lg={2} className='d-flex align-items-center'>
                                             <Dropdown align="end" >
-                                                <Dropdown.Toggle className="p-0" variant="none">
+                                                <Dropdown.Toggle className="p-0 border-0" variant="none">
                                                     <PersonCircle style={{fontSize:"20px"}}/>
                                                 </Dropdown.Toggle>
                                                 <Collapse dimension="height">

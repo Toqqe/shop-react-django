@@ -19,11 +19,15 @@ function Register(){
 
     const [formData, setFormData] = useState({
         username: '',
+        first_name: '',
+        last_name: '',
         email: '',
         password: '',
     });
 
     const [responseMessage, setResponseMessage] = useState('');
+    const [error, setError] = useState();
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -32,14 +36,14 @@ function Register(){
     };
 
     const handleSubmitForm = async (e) => {
-
         e.preventDefault();
         try{
             const response = await axiosInstanceBase.post('account/register/', formData)
-            loginAfterRegistry(formData.username, formData.password);
+            loginAfterRegistry(e);
             setResponseMessage("Account created successfuly!")
         }catch (error){
-            setResponseMessage("There was an error with registration!");
+            setResponseMessage(`There was an error with registration!`);
+            setError(error.response.data);
             console.error("There was an error with registration: ", error);
         }
     }
@@ -65,6 +69,14 @@ function Register(){
                                 <Form.Group className="mb-3" controlId="userInput">
                                     <Form.Control type="text" placeholder="Username" name="username" onChange={handleChange}/>
                                 </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="firstNameInput">
+                                    <Form.Control type="text" placeholder="First name" name="first_name" onChange={handleChange}/>
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="lastNameInput">
+                                    <Form.Control type="text" placeholder="Last name" name="last_name" onChange={handleChange}/>
+                                </Form.Group>
+
                                 <Form.Group className="mb-3" controlId="emailInput">
                                     <Form.Control type="email" placeholder="E-mail" name="email" onChange={handleChange}/>
                                 </Form.Group>
@@ -74,7 +86,14 @@ function Register(){
                                     <Eye className="" style={{fontSize:25}} onClick={() => showHide('passwordInput')}/>
                                 </Form.Group>
 
-
+                                {   
+                                    error&&(
+                                        <div className='error-list text-center' style={{color:"red"}}>
+                                            <p>{error?.username}</p>
+                                            <p>{error?.password}</p>
+                                        </div>
+                                    )                              
+                                }
                                 <Form.Group className="text-center mb-3 ">
                                     <Form.Text as={Link} to="/login" className="text-muted">
                                         Have account?

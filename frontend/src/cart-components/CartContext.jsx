@@ -85,7 +85,9 @@ export const CartProvider = ({children}) => {
                 headers: headers,
             })
             .then( response => {
-                dispatch({type: 'INIT', payload: response.data[0].items});
+                if(response.data.length > 0 ){
+                    dispatch({type: 'INIT', payload: response.data[0].items});
+                }
             });
         }
     }

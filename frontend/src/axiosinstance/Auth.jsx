@@ -10,9 +10,10 @@ const AuthContext = createContext();
 export default AuthContext;
 
 export const AuthProvider = ({children}) => {
+
     let [user, setUser] = useState( () => localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null)
     let [authTokens, setAuthTokens] = useState(() => (localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null))
-    console.log(user)
+
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -53,26 +54,44 @@ export const AuthProvider = ({children}) => {
         
     }
 
-    const loginAfterRegistry = async (username, password) => {
-        try{
-            const response = await axios.post(`${API_URL}token/`, 
-                {
-                    username:username,
-                    password:password
-                } 
-            );
-            const data = response.data;
-
-            if(response.status === 200){
-                localStorage.setItem('authTokens', data);
-                setAuthTokens(data); //JSON.stringify(data)
-                setUser(jwtDecode(data.access));
-                navigate(GLOBAL_URLS.HOME);
-            }
-        }catch(error){
+    const loginAfterRegistry = async (e) => {
+        await axios.post(`${API_URL}token/`, {
+                    username:e.target.username.value,
+                    password:e.target.password.value
+            })
+            .then( res => {
+                const data = res.data;
+                console.log("Register: ", data)
+                if(data){
+                    localStorage.setItem('authTokens', JSON.stringify(data)); // data
+                    setAuthTokens(data); //JSON.stringify(data)
+                    setUser(jwtDecode(data.access));
+                    navigate(GLOBAL_URLS.HOME);
+                }
+            }).catch(error => {
             console.error("Something went wrong: ", error)
-        }
+        })
     }
+    // const loginAfterRegistry = async (username, password) => {
+    //     try{
+    //         const response = await axios.post(`${API_URL}token/`, 
+    //             {
+    //                 username:username,
+    //                 password:password
+    //             } 
+    //         );
+    //         const data = response.data;
+
+    //         if(response.status === 200){
+    //             localStorage.setItem('authTokens', data);
+    //             setAuthTokens(data); //JSON.stringify(data)
+    //             setUser(jwtDecode(data.access));
+    //             navigate(GLOBAL_URLS.HOME);
+    //         }
+    //     }catch(error){
+    //         console.error("Something went wrong: ", error)
+    //     }
+    // }
 
     let logoutUser = (e) => {
         setUser(null)
@@ -115,7 +134,7 @@ export const AuthProvider = ({children}) => {
     }
 
     useEffect(()=>{
-        const REFRESH_INTERVAL = 1000 * 60 * 4 // 4 minutes
+        const REFRESH_INTERVAL = 1000 * 60 * 15 // 4 minutes
         let interval = setInterval(()=>{
             if(authTokens){
                 updateToken();

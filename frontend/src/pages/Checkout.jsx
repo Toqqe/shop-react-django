@@ -21,7 +21,7 @@ import AuthContext from "../axiosinstance/Auth"
 import GLOBAL_URLS from "../axiosinstance/GlobalUrls"
 
 function Checkout(){
-    const {state} = useCart()
+    const {state, dispatch} = useCart()
     const {user, authTokens} = useContext(AuthContext);
 
     const {handleQuantityChange, handleRemoveItem} = ProductOperations()
@@ -48,7 +48,7 @@ function Checkout(){
         })
         .then(response => {
             navigate(GLOBAL_URLS.PROFILE_ORDERS)
-            dispatch
+            dispatch({type:'CLEAR'})
         })
     }
 
