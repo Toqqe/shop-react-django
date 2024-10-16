@@ -19,7 +19,7 @@ class CartViewSet(ModelViewSet):
 
     def get_queryset(self):
         user_id = self.request.headers.get('user-id')
-        return self.queryset.filter(user_id=user_id)
+        return self.queryset.filter(user=user_id)
         
         #print("user: ", self.request.user)
         #return self.queryset.filter(user=self.request.user)

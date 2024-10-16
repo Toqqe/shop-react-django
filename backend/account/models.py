@@ -14,8 +14,11 @@ User = get_user_model()
 #         return self.user.username
     
 class Addressess(models.Model):
-    profile = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     street = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=10)
     country = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.user.username

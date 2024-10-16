@@ -12,17 +12,42 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 # Create your views here.
 
+from django.contrib.auth.models import User
+
+from .models import Addressess
+
 class UserCreateView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = (AllowAny, ) # HasAPIKey
 
+class UserGetInfo(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = ()
+    
+    def get_queryset(self):
+        user_id = self.request.headers.get('user-id')
+        return self.queryset.filter(id=user_id)
+        
     
 class AddressView(ModelViewSet):
+    queryset = Addressess.objects.all()
     serializer_class = AddressSerializer
     permission_classes = () 
 
+    def update(self, request, pk=None):
+        address = Addressess.objects.get(id=pk)
+        if address:
+            serializer = self.get_serializer(address, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def get_queryset(self):
         user_id = self.request.headers.get('user-id')
+        return self.queryset.filter(user=user_id)
 
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated, )

@@ -38,4 +38,4 @@ class UserSerializer(serializers.ModelSerializer):
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model=Addressess
-        fields = '__all__'
+        exclude=['user',]

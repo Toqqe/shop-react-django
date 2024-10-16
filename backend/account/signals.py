@@ -1,14 +1,16 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Addressess
 
-# @receiver(post_save, sender=User)
-# def create_profile(sender, instance, created, **kwargs):
-#     if created:
-#         new_profile = Profile.objects.create(user=instance)
-#         new_profile.first_name = instance.first_name
-#         new_profile.last_name = instance.last_name
-#         new_profile.save()
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        new_profile = Addressess.objects.create(user=instance)
+        new_profile.street = ""
+        new_profile.city = ""
+        new_profile.postal_code = ""
+        new_profile.country = ""
+        new_profile.save()
         
         

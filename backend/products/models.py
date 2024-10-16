@@ -60,7 +60,12 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=15, decimal_places=2, default=99.99)
     public = models.BooleanField(default=True)
     avaliable = models.BooleanField(default=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category,default=None, on_delete=models.SET_NULL, null=True)
     
+    def save(self, *args, **kwargs):
+        if not self.category:
+            self.category, _ = Category.objects.get_or_create(name='Uncategorized')
+        super().save(*args, **kwargs)
+        
     def __str__(self):
         return self.title
