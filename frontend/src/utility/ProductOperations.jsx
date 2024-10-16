@@ -6,11 +6,8 @@ import { useCart } from '../cart-components/CartContext';
 
 const ProductOperations = () => {
     const { state, dispatch } = useCart();
-    const {authTokens} = useContext(AuthContext)
+    const {authTokens, headers} = useContext(AuthContext)
 
-    const headers = {
-        Authorization: `Bearer ${authTokens?.access}`,
-    }
 
     const handleAddItem = ({productID, quantity=1}) =>{
 
@@ -43,14 +40,12 @@ const ProductOperations = () => {
             cart_item_id: product.id,
             quantity: e.target.value,
         }
-
-    
         axiosInstanceBase.put(`cart/items/${data.cart_item_id}/`, data , { headers: headers })
-                    .then(response => {
-                        if(response.status === 202){
-                            dispatch({type:'UPDATE', payload:response.data})
-                        }
-                    })
+                        .then(response => {
+                            if(response.status === 202){
+                                dispatch({type:'UPDATE', payload:response.data})
+                            }
+                        })
     }
     function handleRemoveItem(product){
         const data = {

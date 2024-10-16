@@ -36,7 +36,7 @@ function NavBar(){
                                     <Navbar.Brand className="d-none d-lg-block" as={Link} to="/">SzS</Navbar.Brand>
                                 </Col>
                                 <Col lg={8} className='d-flex justify-content-center'>
-                                        <Nav activeKey={activeKey} onSelect={selectedKey=> `setActiveKey`(selectedKey)}>
+                                        <Nav activeKey={activeKey} onSelect={selectedKey=> (selectedKey)}>
                                             <Nav.Item >
                                                 <Nav.Link eventKey={1} as={Link} to="/">Home</Nav.Link>
                                             </Nav.Item>
@@ -51,7 +51,7 @@ function NavBar(){
                                             </Nav.Item>
                                         </Nav>
                                 </Col>
-                                <Col lg={2} className='d-flex align-items-center'>
+                                <Col lg={2} className='d-flex align-items-center justify-content-center'>
                                             <Dropdown align="end" >
                                                 <Dropdown.Toggle className="p-0 border-0" variant="none">
                                                     <PersonCircle style={{fontSize:"20px"}}/>

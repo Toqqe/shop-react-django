@@ -14,6 +14,7 @@ import Logout from './pages/Logout.jsx';
 import Profile from './pages/Profile.jsx';
 import Checkout from './pages/Checkout.jsx';
 import Orders from "./pages/Orders.jsx"
+import Settings from './pages/Settings.jsx';
 
 import { CartProvider } from './cart-components/CartContext.jsx';
 import CartCanvas from './cart-components/CartCanvas.jsx';
@@ -68,6 +69,7 @@ function App() {
             <Route path="/logout" element={<Logout/>}/>
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/profile/orders" element={<Orders/>}/>
+            <Route path="/profile/settings" element={<Settings/>}/>
             <Route path="/checkout" element={<Checkout/>}/>
             {/* <Route path="*" element={<NotFound />} /> */}
           </Routes>

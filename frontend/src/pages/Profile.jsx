@@ -15,7 +15,7 @@ function Profile(){
     return(
         <Container>
             <Row xs={2} className='row-profile text-center mt-5'>
-                <Col lg={3} >
+                <Col lg={4} >
                     <Card as={Link} to="orders">
                         <Card.Body>
                             <Card.Title>
@@ -25,19 +25,7 @@ function Profile(){
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col lg={3}>
-                    <Card as={Link} to="address" >
-                        <Card.Body>
-
-                            <Card.Title>
-                                <p>Address</p>
-                                <FileEarmarkPerson/>
-                            </Card.Title>
-
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col lg={3}>
+                <Col lg={4}>
                     <Card  as={Link} to="settings">
                         <Card.Body>
 
@@ -49,7 +37,7 @@ function Profile(){
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col lg={3} >
+                <Col lg={4} >
                     <Card onClick={logoutUser}>
                         <Card.Body>
 

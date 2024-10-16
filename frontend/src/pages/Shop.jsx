@@ -67,13 +67,11 @@ function Shop(){
     };
 
     async function handleOrder(typeOrder){
-        if(typeOrder == "0"){
-            filteredCategory = await axiosInstance.get(`products/&ordering=${typeOrder}`);
+        if(currCategory == "0"){
+            filteredCategory = await axiosInstance.get(`products/?ordering=${typeOrder}`);
         }else{
             filteredCategory = await axiosInstance.get(`products/?category__id=${currCategory}&ordering=${typeOrder}`);
         }
-        
-        //navigate(`/shop?category=${currCategory}&ordering=${typeOrder}`);
         setProducts(filteredCategory.data.results);
         setSelectedOrder(typeOrder);
     }

@@ -17,6 +17,10 @@ export const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
+    const headers = {
+        Authorization: `Bearer ${authTokens?.access}`,
+    }
+
     let loginUser = async (e) =>{
         e.preventDefault();
 
@@ -131,6 +135,7 @@ export const AuthProvider = ({children}) => {
         loginUser: loginUser,
         logoutUser: logoutUser,
         loginAfterRegistry : loginAfterRegistry,
+        headers : headers
     }
 
     useEffect(()=>{

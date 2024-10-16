@@ -63,7 +63,7 @@ export const CartProvider = ({children}) => {
 
     const location = useLocation();
 
-    const {user,authTokens} = useContext(AuthContext);
+    const {user,authTokens, headers} = useContext(AuthContext);
     const [isOpen, setIsOpen] = useState(false);
     const [state, dispatch] = useReducer(cartReducer, {items:[], total:0})
 
@@ -77,10 +77,8 @@ export const CartProvider = ({children}) => {
 
     const initCart = () => {        
         if(authTokens){
-            const headers = {
-                Authorization:  `Bearer ${authTokens?.access}`,
-                'User-ID' : user.user_id,
-            }
+            headers['User-ID'] = user.user_id;
+
             axiosInstanceBase.get('cart/cart/',{
                 headers: headers,
             })
