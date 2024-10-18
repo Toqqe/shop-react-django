@@ -397,3 +397,19 @@ input:focus{
   border: 1px solid #e0e0e0;
   border-radius: 15px;
 }
+
+
+.quantity-buttons svg{
+  animation: 0;
+  font-size: 20px;
+  cursor: pointer;
+}
+.quantity-input::-webkit-inner-spin-button,
+.quantity-input::-webkit-outer-spin-button{
+  appearance: none;
+  margin:0;
+}
+.quantity-input{
+  align-items: end !important;
+  width: 3rem !important;
+}

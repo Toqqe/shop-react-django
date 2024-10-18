@@ -10,7 +10,7 @@ import Form from "react-bootstrap/Form"
 import AuthContext from "../axiosinstance/Auth"
 import { useCart } from './CartContext';
 import {Link } from 'react-router-dom';
-import {X} from 'react-bootstrap-icons'
+import {X, Dash, Plus} from 'react-bootstrap-icons'
 
 import ProductOperations from "../utility/ProductOperations";
 function CartCanvas(){
@@ -44,7 +44,9 @@ function CartCanvas(){
                                     </td>
                                     <td className="">
                                         <div className="d-flex justify-content-center align-items-center my-2"> 
-                                            <Form.Control className="text-center" type="number" as="input" size="sm" min={1} max={10} value={product.quantity} onChange={(e) => handleQuantityChange(e, product)} style={{width:"50%"}}/>
+                                            <Dash className="my-1" data-action="minus" onClick={(e) => handleQuantityChange(e, product)}/>
+                                            <Form.Control className="quantity-input text-center" type="number" as="input" size="sm" min={1} max={10} value={product.quantity} style={{width:"40%"}} readOnly />
+                                            <Plus className="" data-action="add" onClick={(e) => handleQuantityChange(e, product)}/>
                                         </div>
                                     </td>
                                     <td className="align-middle">

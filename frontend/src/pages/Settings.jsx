@@ -7,41 +7,17 @@ import { useContext, useEffect, useState } from "react";
 import axiosInstance from "../axiosinstance/AxiosInstance";
 import AuthContext from "../axiosinstance/Auth";
 
+import { getUserData } from "../utility/getUserInfo";
+
 function Settings(){
     const {user, headers} = useContext(AuthContext);
-    headers['User-ID'] = user?.user_id; 
 
-    const [userAddress, setUserAddress] = useState(null);
-    const [userInfo, setUserInfo] = useState(null);
+    const {userAddress, setUserAddress, userInfo, setUserInfo} = getUserData();
 
-    const getUserAddress = () =>{
-        axiosInstance.get(`account/address/`,{
-            headers:headers
-        })
-        .then(res => {
-            if(res.status ===200){
-                const data = res.data;
-                setUserAddress(data[0]);
-            }
-        })
-    }
-    const getUserInfo = () => {
-        axiosInstance.get(`account/user/`, {
-            headers:headers
-        })
-        .then(res => {
-            if(res.status === 200){
-                const data = res.data;
-                setUserInfo(data[0]);
-            }
-        })
-    }
-
-
-    const handleAddressForm = async (e) => {
+    const handleAddressForm = (e) => {
         e.preventDefault();
         try {
-            const response = await axiosInstance.put(`account/address/${userAddress.id}/`, 
+            const response = axiosInstance.put(`account/address/${userAddress.id}/`, 
                 userAddress,
                 {headers:headers}
             )
@@ -51,8 +27,17 @@ function Settings(){
 
     }
 
-    const handleUserForm = () => {
-        console.log("OK")
+    const handleUserForm = (e) => {
+        e.preventDefault();
+        const { username, email, ...updatedUserInfo } = userInfo;
+        try{
+            const response = axiosInstance.put(`account/user/${userInfo.id}/`,
+                updatedUserInfo,
+                {headers:headers}
+            )
+        }catch(error){
+            console.log("error")
+        }
     }
     
     const handleChangeUserData = (e) =>{
@@ -69,10 +54,6 @@ function Settings(){
         })
     }
     
-    useEffect( ()=> {
-        getUserAddress();
-        getUserInfo();
-    },[])
 
     
     return(

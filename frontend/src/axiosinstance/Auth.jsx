@@ -13,12 +13,13 @@ export const AuthProvider = ({children}) => {
 
     let [user, setUser] = useState( () => localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null)
     let [authTokens, setAuthTokens] = useState(() => (localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null))
-
+    console.log(user)
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     const headers = {
         Authorization: `Bearer ${authTokens?.access}`,
+        'User-ID': user?.user_id,
     }
 
     let loginUser = async (e) =>{
@@ -76,26 +77,6 @@ export const AuthProvider = ({children}) => {
             console.error("Something went wrong: ", error)
         })
     }
-    // const loginAfterRegistry = async (username, password) => {
-    //     try{
-    //         const response = await axios.post(`${API_URL}token/`, 
-    //             {
-    //                 username:username,
-    //                 password:password
-    //             } 
-    //         );
-    //         const data = response.data;
-
-    //         if(response.status === 200){
-    //             localStorage.setItem('authTokens', data);
-    //             setAuthTokens(data); //JSON.stringify(data)
-    //             setUser(jwtDecode(data.access));
-    //             navigate(GLOBAL_URLS.HOME);
-    //         }
-    //     }catch(error){
-    //         console.error("Something went wrong: ", error)
-    //     }
-    // }
 
     let logoutUser = (e) => {
         setUser(null)
@@ -135,7 +116,7 @@ export const AuthProvider = ({children}) => {
         loginUser: loginUser,
         logoutUser: logoutUser,
         loginAfterRegistry : loginAfterRegistry,
-        headers : headers
+        headers : headers,
     }
 
     useEffect(()=>{

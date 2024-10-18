@@ -7,6 +7,8 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 
+import { Dash, Plus } from "react-bootstrap-icons"
+
 import {X} from "react-bootstrap-icons"
 import { useNavigate } from "react-router-dom"
 
@@ -22,7 +24,7 @@ import GLOBAL_URLS from "../axiosinstance/GlobalUrls"
 
 function Checkout(){
     const {state, dispatch} = useCart()
-    const {user, authTokens} = useContext(AuthContext);
+    const {user, headers} = useContext(AuthContext);
 
     const {handleQuantityChange, handleRemoveItem} = ProductOperations()
     const navigate = useNavigate();
@@ -34,11 +36,6 @@ function Checkout(){
     })
 
     function handleSubmitOrder(){
-
-        const headers = {
-            Authorization:  `Bearer ${authTokens?.access}`
-        }
-
         const data = {
             payment : selectedValue,
             user : user.user_id
@@ -47,10 +44,13 @@ function Checkout(){
             headers:headers
         })
         .then(response => {
-            navigate(GLOBAL_URLS.PROFILE_ORDERS)
-            dispatch({type:'CLEAR'})
+            if(response.status === 201){
+                navigate(GLOBAL_URLS.PROFILE_ORDERS)
+                dispatch({type:'CLEAR'})
+            }
         })
     }
+
 
     return(
         <Container>      
@@ -79,7 +79,11 @@ function Checkout(){
                                         </td>
                                         <td className="">
                                             <div className="d-flex justify-content-center align-items-center my-2"> 
-                                                <Form.Control className="text-center" type="number" as="input" size="sm" min={1} max={10} value={product.quantity} onChange={(e) => handleQuantityChange(e, product)} style={{width:"40%"}}/>
+                                                <div className="d-flex quantity-buttons align-items-center">
+                                                    <Dash className="my-1" data-action="minus" onClick={(e) => handleQuantityChange(e, product)}/>
+                                                    <Form.Control className="quantity-input text-center" type="number" as="input" size="sm" min={1} max={10} value={product.quantity} style={{width:"40%"}} readOnly />
+                                                    <Plus className="" data-action="add" onClick={(e) => handleQuantityChange(e, product)}/>
+                                                </div>
                                             </div>
                                         </td>
                                         <td className="align-middle">

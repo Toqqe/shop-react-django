@@ -33,12 +33,21 @@ const ProductOperations = () => {
     }
 
     function handleQuantityChange(e, product){
-        if(e.target.value >= 10){
-            e.target.value = 10;
+        let prodQuan = product.quantity;
+
+        if(e.target.dataset.action == 'add'){
+            prodQuan++;
+        }
+        else if(e.target.dataset.action == 'minus') {
+            prodQuan--;
         }
         const data = {
             cart_item_id: product.id,
-            quantity: e.target.value,
+            quantity: prodQuan,
+        }
+        if(prodQuan > 10){
+            alert("Too much!");
+            prodQuan = 10;
         }
         axiosInstanceBase.put(`cart/items/${data.cart_item_id}/`, data , { headers: headers })
                         .then(response => {

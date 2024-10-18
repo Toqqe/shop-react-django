@@ -27,6 +27,8 @@ import {useState, useEffect} from 'react';
 
 import SplashScreen from './pages/SplashScreen.jsx';
 
+import {GetUserInfo} from './utility/getUserInfo.jsx'
+
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -58,6 +60,7 @@ function App() {
       <AuthProvider>
         <CartProvider>
           <NavBar/>
+          <GetUserInfo>
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/shop" element={<Shop/>}/>
@@ -69,11 +72,12 @@ function App() {
             <Route path="/logout" element={<Logout/>}/>
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/profile/orders" element={<Orders/>}/>
-            <Route path="/profile/settings" element={<Settings/>}/>
-            <Route path="/checkout" element={<Checkout/>}/>
+              <Route path="/profile/settings" element={<Settings/>}/>
+              <Route path="/checkout" element={<Checkout/>}/>
             {/* <Route path="*" element={<NotFound />} /> */}
           </Routes>
 
+          </GetUserInfo>
           <LoginToast/>
           <CartCanvas/>
         </CartProvider>
