@@ -4,8 +4,6 @@ from rest_framework.routers import DefaultRouter
 from . import views
 
 urlpatterns = [
-    # path('user/<int:pk>/', views.UserView.as_view()),
-    
     path('register/', views.UserCreateView.as_view()),
     path('logout/', views.LogoutView.as_view()),
     

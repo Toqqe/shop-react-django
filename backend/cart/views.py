@@ -49,9 +49,16 @@ class CartItemViewSet(ModelViewSet):
         if cart_item:
             if int(request.data['quantity']) > 10:
                 request.data['quantity'] = 10
-            cart_item.quantity = request.data['quantity']
-            cart_item.save()
-        serializer = self.get_serializer(cart_item)
+                
+        serializer = self.get_serializer(cart_item, data=request.data, partial=True)
+        
+        if serializer.is_valid():
+            serializer.save()
+        #     cart_item.quantity = request.data['quantity']
+        #     cart_item.save()
+        # serializer = self.get_serializer(cart_item)
+        
+        
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
     
     @action(detail=False, methods=['delete'])

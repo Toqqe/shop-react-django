@@ -20,8 +20,9 @@ class OrderViewSet(ModelViewSet):
         user = self.request.user
         cart_items = CartItem.objects.filter(user_id=user_id)
         total_sum = sum( item.product.price * item.quantity for item in cart_items)
+        
+        
         order = serializer.save(user=user, sum=total_sum, status=1)
-
         for cart_item in cart_items:
             OrderItems.objects.create(
                 order=order,
