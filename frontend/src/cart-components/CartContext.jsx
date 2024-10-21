@@ -3,6 +3,7 @@ import {useState, useContext, createContext, useReducer, useEffect} from 'react'
 import AuthContext from '../axiosinstance/Auth';
 import axiosInstanceBase from '../axiosinstance/AxiosInstanceBase';
 import { useLocation } from "react-router-dom";
+import GLOBAL_URLS from '../axiosinstance/GlobalUrls';
 
 const CartContext = createContext();
 
@@ -63,7 +64,7 @@ export const CartProvider = ({children}) => {
 
     const location = useLocation();
 
-    const {user,authTokens, headers} = useContext(AuthContext);
+    const {authTokens, headers} = useContext(AuthContext);
     const [isOpen, setIsOpen] = useState(false);
     const [state, dispatch] = useReducer(cartReducer, {items:[], total:0})
 
@@ -77,9 +78,7 @@ export const CartProvider = ({children}) => {
 
     const initCart = () => {        
         if(authTokens){
-            headers['User-ID'] = user.user_id;
-
-            axiosInstanceBase.get('cart/cart/',{
+            axiosInstanceBase.get(GLOBAL_URLS.API.CART,{
                 headers: headers,
             })
             .then( response => {

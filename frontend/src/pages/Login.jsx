@@ -10,6 +10,7 @@ import ChangeTitle from "./Title.jsx";
 
 import { useContext } from 'react';
 import AuthContext from '../axiosinstance/Auth.jsx';
+import GLOBAL_URLS from '../axiosinstance/GlobalUrls.js';
 
 function Login(){
     const {loginUser} = useContext(AuthContext);
@@ -37,10 +38,10 @@ function Login(){
                                     <Form.Control type="password" name="password" placeholder="Password" />
                                 </Form.Group>
                                 <Form.Group className="d-flex mb-3">
-                                    <Form.Text className="text-muted me-auto">
+                                    <Form.Text className="text-muted me-auto" as={Link} to={GLOBAL_URLS.PASSWORD_RESTART}>
                                         Forget password?
                                     </Form.Text>
-                                    <Form.Text as={Link} to="/register" className="text-muted">
+                                    <Form.Text as={Link} to={GLOBAL_URLS.REGISTER} className="text-muted">
                                         Don't have account yet?
                                     </Form.Text>
                                 </Form.Group>

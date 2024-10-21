@@ -15,6 +15,7 @@ import { useNavigate, useLocation} from "react-router-dom";
 
 
 import ChangeTitle from "./Title.jsx";
+import GLOBAL_URLS from "../axiosinstance/GlobalUrls.js";
 
 function Shop(){
 
@@ -33,7 +34,7 @@ function Shop(){
 
     useEffect( () => {
         const fetchCategoriesAndProducts = async () => {
-            const categoriesRes = await axiosInstance.get('products/category/')
+            const categoriesRes = await axiosInstance.get(GLOBAL_URLS.API.PRODUCTS_CAT)
             setCategories(c => [...c, ...categoriesRes.data]);
         }
         fetchCategoriesAndProducts();
@@ -44,7 +45,7 @@ function Shop(){
         const fetchData = async () => {
             try{
                 const categoryFilter = selectedCategory !== '0' ? `?category__id=${selectedCategory}` : '';
-                axiosInstance.get(`/products/${categoryFilter}`)
+                axiosInstance.get(`${GLOBAL_URLS.API.PRODUCTS}${categoryFilter}`)
                     .then(res => {
                         setProducts(res.data.results);
                     });
@@ -59,7 +60,7 @@ function Shop(){
 
     function handleCategoryClick(categoryId){
         if(categoryId === 0){
-            navigate(`/shop`);
+            navigate(GLOBAL_URLS.SHOP);
         }else{
             setCurrCategory(categoryId);
             navigate(`/shop?category=${categoryId}`);
@@ -68,9 +69,9 @@ function Shop(){
 
     async function handleOrder(typeOrder){
         if(currCategory == "0"){
-            filteredCategory = await axiosInstance.get(`products/?ordering=${typeOrder}`);
+            filteredCategory = await axiosInstance.get(`${GLOBAL_URLS.API.PRODUCTS}?ordering=${typeOrder}`);
         }else{
-            filteredCategory = await axiosInstance.get(`products/?category__id=${currCategory}&ordering=${typeOrder}`);
+            filteredCategory = await axiosInstance.get(`${GLOBAL_URLS.API.PRODUCTS}?category__id=${currCategory}&ordering=${typeOrder}`);
         }
         setProducts(filteredCategory.data.results);
         setSelectedOrder(typeOrder);
@@ -82,7 +83,6 @@ function Shop(){
             <Row className="mt-5 g-0 justify-content-start">
                 <Col className="bg-body-tertiary p-2 " style={{height:"35rem"}} lg={2}>
                     <ListGroup defaultActiveKey={currCategory}>
-
                         {categories.map( (item, index) => 
                             <ListGroup.Item eventKey={index} key={index} value={item.id} onClick={ () => handleCategoryClick(index)}>{item.name}</ListGroup.Item>
                         )}

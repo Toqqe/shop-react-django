@@ -12,6 +12,7 @@ import { useCart } from '../cart-components/CartContext';
 import AuthContext from "../axiosinstance/Auth"
 
 import ProductOperations from "../utility/ProductOperations"
+import GLOBAL_URLS from "../axiosinstance/GlobalUrls";
 
 
 const ShopProducts = ({ products, xl, md, lg, sm }) => {
@@ -28,9 +29,9 @@ const ShopProducts = ({ products, xl, md, lg, sm }) => {
             <Col key={product.id} xl={xl} md={md} lg={lg} sm={sm}>
                             <Card className="p-0 mx-auto card-container rounded-2" style={{width:"18rem"}}>
 
-                                    <Link to={`/products/${product.id}`} className="text-decoration-none">
-                                        <Card.Img variant="top" src={product.image[0] ? product.image[0].image : "https://via.placeholder.com/288x230"}/>
-                                    </Link>
+                                <Link to={`${GLOBAL_URLS.PRODUCTS}${product.id}`} className="text-decoration-none">
+                                    <Card.Img variant="top" src={product.image[0] ? product.image[0].image : "https://via.placeholder.com/288x230"}/>
+                                </Link>
 
                                 <div className="product-actions">
                                     <Button className="products-button mx-1" variant="dark" disabled={isLogged}>
@@ -41,7 +42,7 @@ const ShopProducts = ({ products, xl, md, lg, sm }) => {
                                     </Button>
                                 </div>
                             <Card.Body className="text-center">
-                                <Link to={`/products/${product.id}`} className="text-decoration-none link-dark">
+                                <Link to={`${GLOBAL_URLS.PRODUCTS}${product.id}`} className="text-decoration-none link-dark">
                                     <Card.Title>{product.title}</Card.Title>
                                 </Link>
                                 <Card.Text className="text-muted">{product.category.name}</Card.Text>

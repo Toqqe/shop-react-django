@@ -8,6 +8,7 @@ import AuthContext from '../axiosinstance/Auth'
 import {Link} from 'react-router-dom'
 
 import {FileEarmarkPerson, Basket, Gear, PersonWalking } from 'react-bootstrap-icons'
+import GLOBAL_URLS from '../axiosinstance/GlobalUrls'
 
 function Profile(){
     const {logoutUser} = useContext(AuthContext)
@@ -16,7 +17,7 @@ function Profile(){
         <Container>
             <Row xs={2} className='row-profile text-center mt-5'>
                 <Col lg={4} >
-                    <Card as={Link} to="orders">
+                    <Card as={Link} to={GLOBAL_URLS.PROFILE_ORDERS}>
                         <Card.Body>
                             <Card.Title>
                                 <p>Orders</p>
@@ -26,7 +27,7 @@ function Profile(){
                     </Card>
                 </Col>
                 <Col lg={4}>
-                    <Card  as={Link} to="settings">
+                    <Card  as={Link} to={GLOBAL_URLS.PROFILE_SETTINGS}>
                         <Card.Body>
 
                             <Card.Title>

@@ -9,6 +9,8 @@ import AuthContext from "../axiosinstance/Auth";
 
 import { getUserData } from "../utility/getUserInfo";
 
+import GLOBAL_URLS from "../axiosinstance/GlobalUrls"
+
 function Settings(){
     const {user, headers} = useContext(AuthContext);
 
@@ -17,7 +19,7 @@ function Settings(){
     const handleAddressForm = (e) => {
         e.preventDefault();
         try {
-            const response = axiosInstance.put(`account/address/${userAddress.id}/`, 
+            const response = axiosInstance.put(`${GLOBAL_URLS.API.ADDRESS}${userAddress.id}/`, 
                 userAddress,
                 {headers:headers}
             )
@@ -31,7 +33,7 @@ function Settings(){
         e.preventDefault();
         const { username, email, ...updatedUserInfo } = userInfo;
         try{
-            const response = axiosInstance.put(`account/user/${userInfo.id}/`,
+            const response = axiosInstance.put(`${GLOBAL_URLS.API.USER}${userInfo.id}/`,
                 updatedUserInfo,
                 {headers:headers}
             )

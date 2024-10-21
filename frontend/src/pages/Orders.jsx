@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react"
 import axiosInstanceBase from "../axiosinstance/AxiosInstanceBase"
 import AuthContext from "../axiosinstance/Auth"
 import { useCart } from "../cart-components/CartContext"
+import GLOBAL_URLS from "../axiosinstance/GlobalUrls"
 
 function Orders(){
 
@@ -19,7 +20,7 @@ function Orders(){
             const headers = {
                 'User-ID' : user.user_id
             }
-            axiosInstanceBase.get('orders/', {
+            axiosInstanceBase.get(GLOBAL_URLS.API.ORDERS, {
                 headers:headers
             })
             .then( response => {
@@ -41,7 +42,6 @@ function Orders(){
                 <thead>
                    <tr>
                         <th>Order ID:</th>
-                        <th>Payment:</th>
                         <th>Sum:</th>
                         <th>Date:</th>
                         <th>Payment:</th>
@@ -53,7 +53,6 @@ function Orders(){
                             orders.map( (order, i) => (
                                 <tr key={i}>
                                     <td>{order.id}</td>
-                                    <td>{order.payment}</td>
                                     <td>{order.sum}$</td>
                                     <td>{order.date_ordered}</td>
                                     <td>{order.payment_display}</td>

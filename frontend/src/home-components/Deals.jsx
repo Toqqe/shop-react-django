@@ -10,6 +10,7 @@ import ShopProducts from "../elements/Products.jsx";
 
 import { useContext, useEffect, useState } from "react";
 import axiosInstance from '../axiosinstance/AxiosInstance.jsx'
+import GLOBAL_URLS from "../axiosinstance/GlobalUrls.js";
 
 
 function Deals(){
@@ -18,7 +19,7 @@ function Deals(){
 
     useEffect( () => {
 
-        axiosInstance.get('products/')
+        axiosInstance.get(GLOBAL_URLS.API.PRODUCTS)
         .then( response => {setProducts(response.data.results)})
         .catch( error => {
             console.error("Error while fetching the data!", error)
@@ -34,7 +35,7 @@ function Deals(){
                 <ShopProducts products={products} test={"2"} xl={3} md={6} lg={4} sm={2}/>
             </Row>
                 <p className="more-products text-center mt-5">
-                    <Link className="text-decoration-underline" to="/shop">VIEW MORE PRODUCTS!</Link>
+                    <Link className="text-decoration-underline" to={GLOBAL_URLS.SHOP}>VIEW MORE PRODUCTS!</Link>
                 </p>
         </Container>
     );

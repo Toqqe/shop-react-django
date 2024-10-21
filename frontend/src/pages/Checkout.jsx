@@ -7,10 +7,10 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 
-import { Dash, Plus } from "react-bootstrap-icons"
+import { Dash, Plus, Pencil, Pen } from "react-bootstrap-icons"
 
 import {X} from "react-bootstrap-icons"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 
 import {useCart} from "../cart-components/CartContext"
 import ProductOperations from "../utility/ProductOperations"
@@ -22,9 +22,12 @@ import AuthContext from "../axiosinstance/Auth"
 
 import GLOBAL_URLS from "../axiosinstance/GlobalUrls"
 
+import { getUserData } from "../utility/getUserInfo"
+
 function Checkout(){
-    const {state, dispatch} = useCart()
+    const {state, dispatch} = useCart();
     const {user, headers} = useContext(AuthContext);
+    const {userAddress} = getUserData();
 
     const {handleQuantityChange, handleRemoveItem} = ProductOperations()
     const navigate = useNavigate();
@@ -40,7 +43,7 @@ function Checkout(){
             payment : selectedValue,
             user : user.user_id
         }
-        axiosInstanceBase.post('orders/',data,{
+        axiosInstanceBase.post(GLOBAL_URLS.API.ORDERS,data,{
             headers:headers
         })
         .then(response => {
@@ -50,8 +53,6 @@ function Checkout(){
             }
         })
     }
-
-
     return(
         <Container>      
             <div className="py-5 text-center">
@@ -119,10 +120,28 @@ function Checkout(){
                     </div>
                 </Col> 
                 <Col lg={3}>
-                    <h5>Address:</h5>
-                    <p>asd asd</p>
-                    <p>asd asd</p>
-                    <p>asd asd</p>
+                    <div className="d-flex align-items-center">
+                        <h5>Address:</h5>
+                        <Button className="p-0 border-0" variant="none" as={Link} to={GLOBAL_URLS.PROFILE_SETTINGS} >
+                            <Pencil className="mx-4"/>
+                        </Button>
+                    </div>
+                    <p>
+                        <span className="address-text">Street: </span> 
+                        {userAddress?.street}
+                    </p>
+                    <p>
+                        <span className="address-text">City: </span> 
+                        {userAddress?.city}
+                    </p>
+                    <p>
+                        <span className="address-text">Postal code: </span> 
+                        {userAddress?.postal_code}
+                    </p>
+                    <p>
+                        <span className="address-text">Country: </span> 
+                        {userAddress?.country}
+                    </p>
                 </Col>
                 <Col lg={6}>
                     <div>

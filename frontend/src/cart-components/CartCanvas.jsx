@@ -13,6 +13,7 @@ import {Link } from 'react-router-dom';
 import {X, Dash, Plus} from 'react-bootstrap-icons'
 
 import ProductOperations from "../utility/ProductOperations";
+import GLOBAL_URLS from "../axiosinstance/GlobalUrls";
 function CartCanvas(){
     const { isOpen, handleView, state} = useCart();
     const { handleQuantityChange, handleRemoveItem, handleClearCart } = ProductOperations();
@@ -77,7 +78,7 @@ function CartCanvas(){
                             </div>
                             <div className="d-flex justify-content-between">
                                 <Button variant="danger" onClick={() => handleClearCart()}>Clear cart</Button>
-                                <Button variant="dark" as={Link} to='/checkout'>Checkout</Button>
+                                <Button variant="dark" as={Link} to={GLOBAL_URLS.CHECKOUT}>Checkout</Button>
                             </div>
                         </div>
                     ) : (

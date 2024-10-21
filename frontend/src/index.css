@@ -14,9 +14,15 @@ body{
 }
 
 /**/
+/* 
+.carousel-container{
+  height: x;
+} */
+
 .carousel-item > img{
+  width: 1400px;
   height: 480px;
-  object-fit: cover;
+  object-fit:  contain;
 }
 /**/
 .info-container, .sale-container{
@@ -361,8 +367,26 @@ input:focus{
   text-align: center;
   align-content: center;
   height: 100vh;
-  background-color: #909090;
+  background-color: #ffffff;
 }
+/* .second-view-shelf{
+  position: absolute;
+  z-index: 99;
+  bottom: 40rem;
+}
+.second-view-shelf img{
+  width: 8% !important;
+}
+.third-view-shelf{
+  left: 5%;
+  position: absolute;
+  z-index: 999;
+  bottom: 50rem;
+}
+.third-view-shelf img{
+  width: 6% !important;
+} */
+
 
 .splash-screen .bi-cart3 {
   animation: fadeIn ease 3s; 
@@ -371,7 +395,7 @@ input:focus{
 
 .bi-cart3{
   z-index: 999999 !important;
-  color: white;
+  color: rgb(224, 224, 224);
 }
 .shelf-wrapper img{
   position: relative;
@@ -382,9 +406,8 @@ input:focus{
 }
 
 .container-orders{
-
-  border: 3px solid #d0d0d0;
-  border-radius: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 15px;
 }
 .table-orders tbody>tr:last-child{
   border: #ffffff;
@@ -412,4 +435,10 @@ input:focus{
 .quantity-input{
   align-items: end !important;
   width: 3rem !important;
+}
+
+
+.address-text{
+  display: inline;
+  font-weight: bold;
 }

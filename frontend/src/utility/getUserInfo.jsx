@@ -2,17 +2,18 @@ import {useState, createContext, useEffect, useContext} from 'react';
 import axiosInstance from '../axiosinstance/AxiosInstance';
 
 import AuthContext from '../axiosinstance/Auth';
+import GLOBAL_URLS from '../axiosinstance/GlobalUrls';
 
 const UserContext = createContext();
 
 export const GetUserInfo = ({children}) => {
-    const {headers} = useContext(AuthContext)
-
+    const {user, headers} = useContext(AuthContext)
+    
     const [userAddress, setUserAddress] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
 
-    const getUserAddress = () =>{
-        axiosInstance.get(`account/address/`,{
+    const getUserAddress = async () =>{
+        await axiosInstance.get(GLOBAL_URLS.API.ADDRESS,{
             headers:headers
         })
         .then(res => {
@@ -22,8 +23,8 @@ export const GetUserInfo = ({children}) => {
             }
         })
     }
-    const getUserInfo = () => {
-        axiosInstance.get(`account/user/`, {
+    const getUserInfo = async () => {
+        await axiosInstance.get(GLOBAL_URLS.API.USER, {
             headers:headers
         })
         .then(res => {
@@ -35,9 +36,11 @@ export const GetUserInfo = ({children}) => {
     }
 
     useEffect(()=>{
-        getUserAddress();
-        getUserInfo();
-    },[])
+        if(user){
+            getUserAddress();
+            getUserInfo();
+        }
+    },[user])
 
     return(
         <UserContext.Provider value={{userAddress, setUserAddress, userInfo, setUserInfo}}>

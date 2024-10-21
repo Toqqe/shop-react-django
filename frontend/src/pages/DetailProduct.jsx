@@ -15,6 +15,7 @@ register();
 
 import ProductSwipper from "../elements/ProductSwipper"
 import ProductOperations from "../utility/ProductOperations";
+import GLOBAL_URLS from "../axiosinstance/GlobalUrls";
 
 function DetailProduct(){
     const {id} = useParams();
@@ -24,7 +25,7 @@ function DetailProduct(){
 
     useEffect( () => {
         const fetchProductData = async () =>{
-            const productData = await axiosInstance.get(`/products/?id=${id}`)
+            const productData = await axiosInstance.get(`${GLOBAL_URLS.API.PRODUCTS}?id=${id}`)
             if(productData.data.results.length == 1){
                 setProduct(productData.data.results[0])
             }

@@ -16,6 +16,7 @@ import Collapse from 'react-bootstrap/Collapse';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+import GLOBAL_URLS from "../axiosinstance/GlobalUrls";
 
 function NavBar(){
     const { handleView, state } = useCart();
@@ -28,26 +29,26 @@ function NavBar(){
         
         <Navbar expand="lg" className="bg-body-tertiary" sticky="top">
             <Container fluid className='mx-5'>
-                <Navbar.Brand className="d-lg-none" as={Link} to="/">SzS</Navbar.Brand>
+                <Navbar.Brand className="d-lg-none" as={Link} to={GLOBAL_URLS.HOME}>SzS</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav" className='mx-auto'>
                             <Row className='d-flex align-items-center gx-5 w-100 mx-auto'>
                                 <Col lg={2}>
-                                    <Navbar.Brand className="d-none d-lg-block" as={Link} to="/">SzS</Navbar.Brand>
+                                    <Navbar.Brand className="d-none d-lg-block" as={Link} to={GLOBAL_URLS.HOME}>SzS</Navbar.Brand>
                                 </Col>
                                 <Col lg={8} className='d-flex justify-content-center'>
                                         <Nav activeKey={activeKey} onSelect={selectedKey=> (selectedKey)}>
                                             <Nav.Item >
-                                                <Nav.Link eventKey={1} as={Link} to="/">Home</Nav.Link>
+                                                <Nav.Link eventKey={1} as={Link} to={GLOBAL_URLS.HOME}>Home</Nav.Link>
                                             </Nav.Item>
                                             <Nav.Item>
-                                                <Nav.Link eventKey={2} as={Link} to="/shop">Shop</Nav.Link>
+                                                <Nav.Link eventKey={2} as={Link} to={GLOBAL_URLS.SHOP}>Shop</Nav.Link>
                                             </Nav.Item>
                                             <Nav.Item>
-                                                <Nav.Link eventKey={3} as={Link} to="/about">About</Nav.Link>
+                                                <Nav.Link eventKey={3} as={Link} to={GLOBAL_URLS.ABOUT}>About</Nav.Link>
                                             </Nav.Item>
                                             <Nav.Item>
-                                                <Nav.Link eventKey={4} as={Link} to="/contact">Contact</Nav.Link>
+                                                <Nav.Link eventKey={4} as={Link} to={GLOBAL_URLS.CONTACT}>Contact</Nav.Link>
                                             </Nav.Item>
                                         </Nav>
                                 </Col>
@@ -60,23 +61,23 @@ function NavBar(){
                                                 <Dropdown.Menu rootCloseEvent='click'>
                                                         {contextData.user ? (
                                                             <div className='text-center'>
-                                                                <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
+                                                                <Dropdown.Item as={Link} to={GLOBAL_URLS.PROFILE}>Profile</Dropdown.Item>
                                                             <Dropdown.Divider/>
-                                                                <Dropdown.Item className="m-0 p-1" as={Link} to="/profile">
+                                                                <Dropdown.Item className="m-0 p-1" as={Link} to={GLOBAL_URLS.PROFILE}>
                                                                     <p className='text-center m-0'>{contextData.user.username }</p> 
                                                                 </Dropdown.Item>
-                                                                <Dropdown.Item className="m-0 p-1" as={Link} to="/logout" onClick={contextData.logoutUser}>
+                                                                <Dropdown.Item className="m-0 p-1" as={Link} to={GLOBAL_URLS.LOGOUT} onClick={contextData.logoutUser}>
                                                                     <p className='text-center m-0'>Logout</p> 
                                                                 </Dropdown.Item>
                                                             </div>
                                                         
                                                         ) : (
                                                             <div className='text-center'>
-                                                                <Dropdown.Item as={Link} to="/login">
+                                                                <Dropdown.Item as={Link} to={GLOBAL_URLS.LOGIN}>
                                                                         <p className='p-0 m-1'>Login</p> 
                                                                 </Dropdown.Item>
 
-                                                                <Dropdown.Item as={Link} to="/register">
+                                                                <Dropdown.Item as={Link} to={GLOBAL_URLS.REGISTER}>
                                                                         <p className='p-0 m-1'>Register</p> 
                                                                 </Dropdown.Item>
                                                             </div>
@@ -93,7 +94,7 @@ function NavBar(){
                                             ) : (
                                             <>
                                                 <p className='mx-2 my-auto text-muted'>
-                                                    <Link to="/login" className='text-decoration-none'>Login in</Link>
+                                                    <Link to={GLOBAL_URLS.LOGIN} className='text-decoration-none'>Login in</Link>
                                                 </p>
                                             </>
                                             )}

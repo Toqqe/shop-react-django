@@ -12,8 +12,20 @@ export default function SplashScreen(){
                 <img src={Shelf}/>
                 <img src={Shelf}/>
                 <img src={Shelf}/>
+                <div className='second-view-shelf'>
+                    <img src={Shelf}/>
+                    <img src={Shelf}/>
+                    <img src={Shelf}/>
+                    <img src={Shelf}/>
+                </div>
+                <div className='third-view-shelf'>
+                    <img src={Shelf}/>
+                    <img src={Shelf}/>
+                    <img src={Shelf}/>
+                    <img src={Shelf}/>
+                </div>
             </div>
-            <Cart3 className='fade-in'/>
+            <Cart3 className='fade-in' color='black m-0 p-0'/>
             <hr/>
         </div>
     )

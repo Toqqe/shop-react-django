@@ -13,7 +13,6 @@ export const AuthProvider = ({children}) => {
 
     let [user, setUser] = useState( () => localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null)
     let [authTokens, setAuthTokens] = useState(() => (localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null))
-    console.log(user)
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -22,10 +21,10 @@ export const AuthProvider = ({children}) => {
         'User-ID': user?.user_id,
     }
 
-    let loginUser = async (e) =>{
+    let loginUser = (e) =>{
         e.preventDefault();
 
-        await axios.post(`${API_URL}token/`, {
+        axios.post(`${API_URL}token/`, {
             username: e.target.username.value,
             password: e.target.password.value,
         })
@@ -86,14 +85,11 @@ export const AuthProvider = ({children}) => {
 
 
     const updateToken = async () => {
-        console.log("updateToken: ", authTokens)
-
         try{
             const response = await axios.post(`${API_URL}token/refresh/`, {
                 refresh:authTokens?.refresh
             })
             if(response.status === 200){
-
                 setAuthTokens(response.data)
                 setUser(jwtDecode(response.data.access))
                 localStorage.setItem('authTokens', JSON.stringify(response.data)) //JSON.stringify(response.data))
@@ -120,15 +116,19 @@ export const AuthProvider = ({children}) => {
     }
 
     useEffect(()=>{
-        const REFRESH_INTERVAL = 1000 * 60 * 15 // 4 minutes
+        const REFRESH_INTERVAL = 1000 * 60 * 15 // 15 minutes
         let interval = setInterval(()=>{
             if(authTokens){
                 updateToken();
             }
         }, REFRESH_INTERVAL)
-        return () => clearInterval(interval)
 
+        return () => clearInterval(interval)
     },[authTokens])
+
+    window.addEventListener('beforeunload', () => {
+        updateToken();
+    });
 
     useEffect( () => {
         if(user){
