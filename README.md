@@ -12,7 +12,7 @@
 *   <p>DRF(django-rest-framework) -- 3.15.2</p>
 *   <p>Bootstrap 5 -- react-bootstrap 2.10.2</p>
 
-<h3>* React modules:</h3>
+* <h3>React modules:</h3>
 <p>-- axios</p>
 <p>-- react-dom</p>
 <p>-- react-router-dom</p>
@@ -23,7 +23,7 @@
 <p>-- react-bootstrap</p>
 <p>-- react-bootstrap-icons</p>
 
-<h3>* DRF modules:</h3>
+* <h3> DRF modules:</h3>
 <p>-- corsheaders</p>
 <p>-- rest_framework</p>
 <p>-- rest_framework_simplejwt</p>
