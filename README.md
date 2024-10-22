@@ -29,6 +29,7 @@
 <p>-- rest_framework_simplejwt</p>
 <p>-- django_filters</p>
 
+* Preview:
 
-<img src="https://github.com/user-attachments/assets/9354eab2-84d7-4c58-93cd-f83727a6c197" width="640" height="420" />
+<img src="https://github.com/user-attachments/assets/9354eab2-84d7-4c58-93cd-f83727a6c197" width="640" height="380" align="center" />
 
