@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
     headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
-        'Authorization': `Api-Key 70V5oEiP.O93IGXAZDyPjN2oXYFGQJfZ7Jt53WUY2`,
+        'Authorization': import.meta.env.VITE_API_KEY_REACT,
     },
 });
 

@@ -2,6 +2,7 @@ import { useReducer, useContext, useState } from "react"
 import AuthContext from "../axiosinstance/Auth"
 import axiosInstanceBase from "../axiosinstance/AxiosInstanceBase"
 import { useCart } from '../cart-components/CartContext';
+import GLOBAL_URLS from "../axiosinstance/GlobalUrls";
 
 
 const ProductOperations = () => {
@@ -49,7 +50,7 @@ const ProductOperations = () => {
             alert("Too much!");
             prodQuan = 10;
         }
-        axiosInstanceBase.put(`cart/items/${data.cart_item_id}/`, data , { headers: headers })
+        axiosInstanceBase.put(`${GLOBAL_URLS.API.CART_ITEMS}${data.cart_item_id}/`, data , { headers: headers })
                         .then(response => {
                             if(response.status === 202){
                                 dispatch({type:'UPDATE', payload:response.data})
@@ -60,7 +61,7 @@ const ProductOperations = () => {
         const data = {
             cart_item_id: product,
         }
-        axiosInstanceBase.delete(`cart/items/${data.cart_item_id.id}/`, data, {headers:headers})
+        axiosInstanceBase.delete(`${GLOBAL_URLS.API.CART_ITEMS}${data.cart_item_id.id}/`, data, {headers:headers})
                         .then( response => {
                             if(response.status === 204){
                                 dispatch({type:"REMOVE", payload: data.cart_item_id})
@@ -70,7 +71,7 @@ const ProductOperations = () => {
 
     function handleClearCart(){
 
-        axiosInstanceBase.delete(`cart/items/clear_cart/`, {headers:headers})
+        axiosInstanceBase.delete(`${GLOBAL_URLS.API.CART_ITEMS}clear_cart/`, {headers:headers})
                         .then(
                             response => {
                                 if(response.status === 204){
