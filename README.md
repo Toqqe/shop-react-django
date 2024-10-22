@@ -28,3 +28,6 @@
 <p>-- rest_framework</p>
 <p>-- rest_framework_simplejwt</p>
 <p>-- django_filters</p>
+
+
+![site](https://github.com/user-attachments/assets/53f123f7-6f55-4ae5-b084-3d2c449bfca3)
