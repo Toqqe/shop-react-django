@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form"
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button'
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 import axiosInstance from "../axiosinstance/AxiosInstance";
 import AuthContext from "../axiosinstance/Auth";

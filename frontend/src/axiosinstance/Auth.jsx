@@ -127,7 +127,9 @@ export const AuthProvider = ({children}) => {
     },[authTokens])
 
     window.addEventListener('beforeunload', () => {
-        updateToken();
+        if(user){
+            updateToken();
+        }
     });
 
     useEffect( () => {

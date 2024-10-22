@@ -31,7 +31,6 @@ function Checkout(){
 
     const {handleQuantityChange, handleRemoveItem} = ProductOperations()
     const navigate = useNavigate();
-
     const [selectedValue, setSelectedValue] = useState('1');
     
     const handleRadioChange = ((value) => {
@@ -98,7 +97,11 @@ function Checkout(){
                                 ):(
                                     <tr>
                                         <td>
-                                            <h2 className="text-center">Add something to cart!</h2> 
+                                            {user ? 
+                                                <h2 className="text-center">Add something to cart!</h2> 
+                                                :
+                                                <h2 className="text-center">Login in first!</h2> 
+                                            }
                                         </td>
                                     </tr>
                                 )}

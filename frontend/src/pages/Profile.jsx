@@ -17,7 +17,7 @@ function Profile(){
 
     return(
         <Container>
-            <ChangeTitle title={`Profile ${user.username}`}/>
+            {/* <ChangeTitle title={`Profile ${user.username}`}/> */}
             <Row xs={2} className='row-profile text-center mt-5'>
                 <Col lg={4} >
                     <Card as={Link} to={GLOBAL_URLS.PROFILE_ORDERS}>

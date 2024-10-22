@@ -22,7 +22,7 @@ import { CartProvider } from './cart-components/CartContext.jsx';
 import CartCanvas from './cart-components/CartCanvas.jsx';
 
 import {AuthProvider} from "./axiosinstance/Auth.jsx"
-
+import PrivateRoute from './axiosinstance/PrivateRoute.jsx';
 import LoginToast from "./elements/LoginToast.jsx"
 
 import {useState, useEffect} from 'react';
@@ -72,9 +72,26 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/logout" element={<Logout/>}/>
-            <Route path="/profile" element={<Profile/>}/>
-            <Route path="/profile/orders" element={<Orders/>}/>
-            <Route path="/profile/settings" element={<Settings/>}/>
+
+            <Route path="/profile" element={
+              <PrivateRoute>
+                <Profile/>
+              </PrivateRoute>
+
+              }/>
+            <Route path="/profile/orders" element={
+              <PrivateRoute>
+                <Orders/>
+              </PrivateRoute>
+              
+              }/>
+            <Route path="/profile/settings" element={
+              <PrivateRoute>
+                <Settings/>
+              </PrivateRoute>
+              
+              }/>
+
             <Route path="/checkout" element={<Checkout/>}/>
             <Route path="/password-restart" element={<RestartPassword/>}/>
             <Route path="/password-restart-confirm/:uid/:token/" element={<RestartPasswordConfirm/>}/>

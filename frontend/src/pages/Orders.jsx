@@ -2,7 +2,7 @@
 import Container from "react-bootstrap/Container"
 import Table from "react-bootstrap/Table"
 
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useNavigate } from "react"
 
 import axiosInstanceBase from "../axiosinstance/AxiosInstanceBase"
 import AuthContext from "../axiosinstance/Auth"
@@ -14,6 +14,9 @@ import ChangeTitle from "./Title.jsx";
 function Orders(){
 
     const {user} = useContext(AuthContext)
+    if(!user){
+        navigate(GLOBAL_URLS.HOME)
+    }
     const [orders, setOrders] = useState([])
     const {dispatch} = useCart()
 
