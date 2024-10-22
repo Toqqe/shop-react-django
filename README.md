@@ -30,4 +30,5 @@
 <p>-- django_filters</p>
 
 
-![site](https://github.com/user-attachments/assets/53f123f7-6f55-4ae5-b084-3d2c449bfca3)
+<img src="https://github.com/user-attachments/assets/9354eab2-84d7-4c58-93cd-f83727a6c197" width="" height="480" />
+
