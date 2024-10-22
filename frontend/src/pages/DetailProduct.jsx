@@ -17,6 +17,8 @@ import ProductSwipper from "../elements/ProductSwipper"
 import ProductOperations from "../utility/ProductOperations";
 import GLOBAL_URLS from "../axiosinstance/GlobalUrls";
 
+import ChangeTitle from "./Title.jsx";
+
 function DetailProduct(){
     const {id} = useParams();
     const [product, setProduct] = useState(null);
@@ -48,6 +50,7 @@ function DetailProduct(){
                     {product ? (
                         <div className="product-details-content mt-5 p-5 ps-0">
                             <div className="display-5">{ product.title }</div>
+                            <ChangeTitle title={product.title}/>
                             <div className="product-details-price my-4">
                                 <span>{ product.price }$</span>
                                 </div>

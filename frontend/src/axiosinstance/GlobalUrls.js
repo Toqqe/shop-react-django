@@ -1,7 +1,7 @@
 
 
-const BASE_URL_API = 'http://localhost:8000/api/'
-
+const BASE_URL_API = import.meta.env.VITE_BASE_URL_API;
+console.log(BASE_URL_API)
 const GLOBAL_URLS = {
     HOME: '/',
     CART: '/cart',

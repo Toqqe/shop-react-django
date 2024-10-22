@@ -9,6 +9,8 @@ import AuthContext from "../axiosinstance/Auth"
 import { useCart } from "../cart-components/CartContext"
 import GLOBAL_URLS from "../axiosinstance/GlobalUrls"
 
+import ChangeTitle from "./Title.jsx";
+
 function Orders(){
 
     const {user} = useContext(AuthContext)
@@ -38,6 +40,7 @@ function Orders(){
 
     return(
         <Container className="mt-5 container-orders">
+            <ChangeTitle title="Orders"/>
             <Table responsive className="text-center table-orders">
                 <thead>
                    <tr>

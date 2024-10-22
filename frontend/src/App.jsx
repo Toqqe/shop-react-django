@@ -17,7 +17,7 @@ import Orders from "./pages/Orders.jsx"
 import Settings from './pages/Settings.jsx';
 import RestartPassword from './pages/RestartPassword.jsx';
 import RestartPasswordConfirm from './pages/RestartPasswordConfirm.jsx';
-
+import NotFound from './pages/NotFound.jsx';
 import { CartProvider } from './cart-components/CartContext.jsx';
 import CartCanvas from './cart-components/CartCanvas.jsx';
 
@@ -42,7 +42,7 @@ function App() {
         const timer = setTimeout( () => {
             setLoading(false);
             sessionStorage.setItem('hasSeenSplashScreen', 'true');
-        }, 2000)
+        }, 1000)
         return () => {
           clearTimeout(timer);
         };
@@ -78,7 +78,7 @@ function App() {
             <Route path="/checkout" element={<Checkout/>}/>
             <Route path="/password-restart" element={<RestartPassword/>}/>
             <Route path="/password-restart-confirm/:uid/:token/" element={<RestartPasswordConfirm/>}/>
-            {/* <Route path="*" element={<NotFound />} /> */}
+            <Route path="*" element={<NotFound />} /> 
           </Routes>
 
           </GetUserInfo>

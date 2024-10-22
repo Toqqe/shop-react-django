@@ -10,7 +10,7 @@ import AuthContext from "../axiosinstance/Auth";
 import { getUserData } from "../utility/getUserInfo";
 
 import GLOBAL_URLS from "../axiosinstance/GlobalUrls"
-
+import ChangeTitle from "./Title.jsx";
 function Settings(){
     const {user, headers} = useContext(AuthContext);
 
@@ -60,6 +60,7 @@ function Settings(){
     
     return(
         <Container className="settings-container">
+            <ChangeTitle title="Settings" />
             <div className="d-flex justify-content-around">
                 <Form className="mt-5" style={{width:"20rem"}} onSubmit={handleAddressForm}>
                     <FloatingLabel className="mt-2" controlId="floatingStreet" label="Street">

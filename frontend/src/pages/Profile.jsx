@@ -10,11 +10,14 @@ import {Link} from 'react-router-dom'
 import {FileEarmarkPerson, Basket, Gear, PersonWalking } from 'react-bootstrap-icons'
 import GLOBAL_URLS from '../axiosinstance/GlobalUrls'
 
+import ChangeTitle from "./Title.jsx";
+
 function Profile(){
-    const {logoutUser} = useContext(AuthContext)
+    const {user,logoutUser} = useContext(AuthContext)
 
     return(
         <Container>
+            <ChangeTitle title={`Profile ${user.username}`}/>
             <Row xs={2} className='row-profile text-center mt-5'>
                 <Col lg={4} >
                     <Card as={Link} to={GLOBAL_URLS.PROFILE_ORDERS}>
