@@ -28,3 +28,7 @@ dist-ssr
 __pycache__
 db.sqlite3
 .env
+migrations
+media
+Auth
+
