@@ -29,16 +29,3 @@ class ContactMessageView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
-def api_home(request, *args, **kwargs):
-    """
-    DRF API View
-    """
-    # serializer = ProductSerializer(data=request.data)
-    # if serializer.is_valid(raise_exception=True):
-    #     # instance = serializer.save()
-    #     # instance = form.save()
-    #     print(serializer.data)
-    #     return Response(serializer.data)
-    return Response({"invalid": "not good data"}, status=400)
-

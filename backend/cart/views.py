@@ -15,7 +15,7 @@ from products.models import Product
 class CartViewSet(ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    permission_classes = [] #IsAuthenticated
+    permission_classes = [IsAuthenticated,] #IsAuthenticated
 
     def get_queryset(self):
         user_id = self.request.headers.get('user-id')
@@ -27,7 +27,7 @@ class CartViewSet(ModelViewSet):
 class CartItemViewSet(ModelViewSet):
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
-    permission_classes = [] #IsAuthenticated
+    permission_classes = [IsAuthenticated,] #IsAuthenticated
     
     def create(self, request):
         cart, created = Cart.objects.get_or_create(user=request.user)
@@ -54,10 +54,6 @@ class CartItemViewSet(ModelViewSet):
         
         if serializer.is_valid():
             serializer.save()
-        #     cart_item.quantity = request.data['quantity']
-        #     cart_item.save()
-        # serializer = self.get_serializer(cart_item)
-        
         
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
     

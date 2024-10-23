@@ -31,7 +31,7 @@ class UserCreateView(generics.CreateAPIView):
 class UserGetInfo(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = ()
+    permission_classes = [IsAuthenticated,]
     
     def get_queryset(self):
         user_id = self.request.headers.get('user-id')
@@ -52,7 +52,7 @@ class UserGetInfo(ModelViewSet):
 class AddressView(ModelViewSet):
     queryset = Addressess.objects.all()
     serializer_class = AddressSerializer
-    permission_classes = () 
+    permission_classes = [IsAuthenticated,] 
 
     def get_queryset(self):
         user_id = self.request.headers.get('user-id')

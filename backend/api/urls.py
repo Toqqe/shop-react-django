@@ -10,7 +10,5 @@ urlpatterns = [
     
     path('token/', views.CustomTokenObtainPairView.as_view()),
     path('token/refresh/', views.CustomTokenRefreshView.as_view()),
-    
-    path('', views.api_home),
     path('contact/', views.ContactMessageView.as_view())
 ]

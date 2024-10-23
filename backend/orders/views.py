@@ -4,12 +4,15 @@ from rest_framework.viewsets import ModelViewSet
 from .models import Orders, OrderItems
 from .serializers import OrderSerializer
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated
+
 from cart.models import CartItem
 # Create your views here.
 
 class OrderViewSet(ModelViewSet):
     serializer_class = OrderSerializer
-    permission_classes = [] 
+    permission_classes = [IsAuthenticated,] 
+
     
     def get_queryset(self):
         user_id = self.request.headers.get('user-id')

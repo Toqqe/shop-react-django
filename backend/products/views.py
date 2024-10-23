@@ -10,12 +10,13 @@ from rest_framework.pagination import PageNumberPagination
 from .models import Product, Category
 from .serializer import ProductSerializer, CategorySerializer
 # Create your views here.
+from rest_framework_api_key.models import APIKey
 
 class ProductPagination(PageNumberPagination):
     page_size = 8
 
 class ProductListAPIView(generics.ListAPIView):
-    permission_classes = [] # HasAPIKey
+    permission_classes = [HasAPIKey] # HasAPIKey
     queryset = Product.objects.all().order_by('id')
     serializer_class = ProductSerializer
     filterset_fields = ['id', 'category__id']
@@ -24,6 +25,6 @@ class ProductListAPIView(generics.ListAPIView):
     
     
 class CategoryListAPIView(generics.ListAPIView):
-    permission_classes = [] # HasAPIKey
+    permission_classes = [HasAPIKey] # HasAPIKey
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
