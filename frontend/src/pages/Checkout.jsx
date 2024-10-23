@@ -16,7 +16,7 @@ import {useCart} from "../cart-components/CartContext"
 import ProductOperations from "../utility/ProductOperations"
 
 
-import axiosInstanceBase from "../axiosinstance/AxiosInstanceBase"
+import axiosInstance from "../axiosinstance/AxiosInstance"
 import { useState, useContext } from "react"
 import AuthContext from "../axiosinstance/Auth"
 
@@ -42,7 +42,7 @@ function Checkout(){
             payment : selectedValue,
             user : user.user_id
         }
-        axiosInstanceBase.post(GLOBAL_URLS.API.ORDERS,data,{
+        axiosInstance.post(GLOBAL_URLS.API.ORDERS,data,{
             headers:headers
         })
         .then(response => {

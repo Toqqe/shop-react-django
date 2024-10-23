@@ -3,6 +3,7 @@ import { json, useNavigate } from "react-router-dom";
 import { jwtDecode } from 'jwt-decode';
 import axios from "axios";
 import GLOBAL_URLS from "./GlobalUrls";
+import axiosInstance from "./AxiosInstance"
 
 const API_URL = GLOBAL_URLS.API.BASE_URL;
 
@@ -17,14 +18,14 @@ export const AuthProvider = ({children}) => {
     const navigate = useNavigate();
 
     const headers = {
-        Authorization: `Bearer ${authTokens?.access}`,
+        'Authorization': `Bearer ${authTokens?.access}`,
         'User-ID': user?.user_id,
     }
-
+    
     let loginUser = (e) =>{
         e.preventDefault();
 
-        axios.post(`${API_URL}token/`, {
+        axiosInstance.post(`${API_URL}token/`, {
             username: e.target.username.value,
             password: e.target.password.value,
         })
@@ -59,7 +60,7 @@ export const AuthProvider = ({children}) => {
     }
 
     const loginAfterRegistry = async (e) => {
-        await axios.post(`${API_URL}token/`, {
+        await axiosInstance.post(`${API_URL}token/`, {
                     username:e.target.username.value,
                     password:e.target.password.value
             })

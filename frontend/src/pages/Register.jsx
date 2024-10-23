@@ -27,8 +27,6 @@ function Register(){
         email: '',
         password: '',
     });
-
-    const [responseMessage, setResponseMessage] = useState('');
     const [error, setError] = useState({});
 
     const handleChange = (e) => {
@@ -44,10 +42,8 @@ function Register(){
             setLoading(true)
             const response = await axiosInstanceBase.post(GLOBAL_URLS.API.REGISTER, formData)
             loginAfterRegistry(e);
-            setResponseMessage("Account created successfuly!")
         }catch (error){
             setLoading(false)
-            setResponseMessage(`There was an error with registration!`);
             setError(error.response.data);
             console.log(error.response.data)
             console.error("There was an error with registration: ", error);
@@ -99,13 +95,6 @@ function Register(){
                                     {error.password && <p className='text-center'>{error.password[0]}</p>}
                                 </Form.Group>
 
-                                {   
-                                    responseMessage&&(
-                                        <div className='error-list text-center' style={{color:"red"}}>
-                                            <p>{responseMessage}</p>
-                                        </div>
-                                    )                              
-                                }
                                 <Form.Group className="text-center mb-3 ">
                                     <Form.Text as={Link} to={GLOBAL_URLS.LOGIN} className="text-muted">
                                         Have account?

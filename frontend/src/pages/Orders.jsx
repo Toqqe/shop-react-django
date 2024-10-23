@@ -4,7 +4,7 @@ import Table from "react-bootstrap/Table"
 
 import { useContext, useEffect, useState, useNavigate } from "react"
 
-import axiosInstanceBase from "../axiosinstance/AxiosInstanceBase"
+import axiosInstance from "../axiosinstance/AxiosInstance"
 import AuthContext from "../axiosinstance/Auth"
 import { useCart } from "../cart-components/CartContext"
 import GLOBAL_URLS from "../axiosinstance/GlobalUrls"
@@ -13,26 +13,17 @@ import ChangeTitle from "./Title.jsx";
 
 function Orders(){
 
-    const {user} = useContext(AuthContext)
-    if(!user){
-        navigate(GLOBAL_URLS.HOME)
-    }
+    const {user, headers} = useContext(AuthContext)
+
     const [orders, setOrders] = useState([])
     const {dispatch} = useCart()
 
     const displayOrders = () => {
-        if(user){
-            const headers = {
-                'User-ID' : user.user_id
-            }
-            axiosInstanceBase.get(GLOBAL_URLS.API.ORDERS, {
-                headers:headers
-            })
-            .then( response => {
-                setOrders(response.data);
-                dispatch({type:'CLEAR'})
-            });
-        }
+        axiosInstance.get(GLOBAL_URLS.API.ORDERS, {headers:headers})
+        .then( response => {
+            setOrders(response.data);
+            dispatch({type:'CLEAR'})
+        });
     }
 
     useEffect(() => {
